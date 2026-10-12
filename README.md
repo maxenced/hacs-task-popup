@@ -15,7 +15,7 @@ Intégration Home Assistant qui affiche **en plein écran sur la tablette** les 
 ### Avec HACS (dépôt personnalisé)
 
 1. HACS → menu ⋮ → **Dépôts personnalisés**.
-2. Dépôt : `https://github.com/maxenced/ha_task_popup`, type : **Intégration** → **Ajouter**.
+2. Dépôt : `https://github.com/maxenced/hacs-task-popup`, type : **Intégration** → **Ajouter**.
 3. Rechercher **HA Task Popup** dans HACS → **Télécharger**, puis redémarrer Home Assistant.
 4. Recharger une fois la page sur la tablette (Fully : *Load start URL*) pour charger le module JS.
 

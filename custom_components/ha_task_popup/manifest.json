@@ -5,10 +5,10 @@
   "codeowners": ["@maxenced"],
   "config_flow": true,
   "dependencies": ["frontend", "http", "websocket_api"],
-  "documentation": "https://github.com/maxenced/ha_task_popup",
+  "documentation": "https://github.com/maxenced/hacs-task-popup",
   "integration_type": "service",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/maxenced/ha_task_popup/issues",
+  "issue_tracker": "https://github.com/maxenced/hacs-task-popup/issues",
   "requirements": [],
   "single_config_entry": true,
   "version": "0.1.0"
