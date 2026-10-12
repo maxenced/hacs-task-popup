@@ -1,0 +1,198 @@
+{
+  "config": {
+    "abort": {
+      "single_instance_allowed": "Déjà configurée. Ajoutez les tâches depuis la page de l'intégration."
+    },
+    "step": {
+      "user": {
+        "title": "Popup de tâches",
+        "description": "Réglages généraux. Les tâches s'ajoutent ensuite une par une depuis la page de l'intégration.",
+        "data": {
+          "fully_devices": "Tablettes Fully Kiosk",
+          "display_on": "Afficher le popup sur",
+          "manage_screen": "Allumer l'écran de la tablette et le garder allumé"
+        },
+        "data_description": {
+          "fully_devices": "Tablettes (intégration fully_kiosk) où le popup s'affiche et dont l'écran est piloté.",
+          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée."
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Popup de tâches",
+        "data": {
+          "fully_devices": "Tablettes Fully Kiosk",
+          "display_on": "Afficher le popup sur",
+          "manage_screen": "Allumer l'écran de la tablette et le garder allumé"
+        },
+        "data_description": {
+          "fully_devices": "Tablettes (intégration fully_kiosk) où le popup s'affiche et dont l'écran est piloté.",
+          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée."
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "task": {
+      "initiate_flow": {
+        "user": "Ajouter une tâche"
+      },
+      "entry_type": "Tâche",
+      "abort": {
+        "reconfigure_successful": "Tâche modifiée"
+      },
+      "error": {
+        "no_days": "Choisissez au moins un jour"
+      },
+      "step": {
+        "user": {
+          "title": "Nouvelle tâche",
+          "data": {
+            "name": "Nom",
+            "message": "Message",
+            "icon": "Icône",
+            "color": "Couleur de fond",
+            "display_mode": "Mode d'affichage",
+            "snooze_minutes": "Durée du snooze",
+            "trigger": "Déclencheur"
+          }
+        },
+        "reconfigure": {
+          "title": "Modifier la tâche",
+          "data": {
+            "name": "Nom",
+            "message": "Message",
+            "icon": "Icône",
+            "color": "Couleur de fond",
+            "display_mode": "Mode d'affichage",
+            "snooze_minutes": "Durée du snooze",
+            "trigger": "Déclencheur"
+          }
+        },
+        "simple": {
+          "title": "Jours et heure",
+          "description": "La tâche apparaît à l'heure de départ les jours choisis et reste affichée jusqu'à « Fait » (ou jusqu'à l'heure de fin, optionnelle).",
+          "data": {
+            "days": "Jours",
+            "start_time": "Heure de départ",
+            "end_time": "Heure de fin (optionnelle)"
+          }
+        },
+        "calendar": {
+          "title": "Planning",
+          "description": "La tâche est active pendant les événements du calendrier.",
+          "data": {
+            "calendar_entity": "Calendrier",
+            "title_filter": "Le titre contient (optionnel)"
+          }
+        },
+        "detection": {
+          "title": "Détection",
+          "description": "La tâche apparaît quand l'entité passe à l'état choisi, et disparaît après la durée, même sans acquittement.",
+          "data": {
+            "entity": "Entité",
+            "target_state": "État",
+            "duration_minutes": "Durée d'affichage"
+          }
+        }
+      }
+    }
+  },
+  "selector": {
+    "display_on": {
+      "options": {
+        "fully": "Les tablettes Fully Kiosk choisies uniquement",
+        "all": "Tous les navigateurs"
+      }
+    },
+    "display_mode": {
+      "options": {
+        "fullscreen": "Plein écran"
+      }
+    },
+    "trigger": {
+      "options": {
+        "simple": "Simple (jours + heure)",
+        "calendar": "Planning (calendrier)",
+        "detection": "Détection (état d'une entité)"
+      }
+    },
+    "days": {
+      "options": {
+        "mon": "Lundi",
+        "tue": "Mardi",
+        "wed": "Mercredi",
+        "thu": "Jeudi",
+        "fri": "Vendredi",
+        "sat": "Samedi",
+        "sun": "Dimanche"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "state": {
+        "name": "État",
+        "state": {
+          "inactive": "Inactive",
+          "active": "Active",
+          "snoozed": "Snoozée",
+          "done": "Faite"
+        }
+      }
+    },
+    "button": {
+      "ack": {
+        "name": "Fait"
+      },
+      "snooze": {
+        "name": "Snooze"
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_task": {
+      "message": "Tâche inconnue : {task}"
+    },
+    "not_loaded": {
+      "message": "L'intégration HA Task Popup n'est pas configurée"
+    }
+  },
+  "services": {
+    "ack": {
+      "name": "Marquer comme faite",
+      "description": "Marque des tâches comme faites jusqu'à leur prochaine occurrence.",
+      "fields": {
+        "entity_id": {
+          "name": "Tâche",
+          "description": "Capteur(s) d'état de la ou des tâches."
+        },
+        "task_id": {
+          "name": "Identifiant de tâche",
+          "description": "Identifiant de la tâche (sous-entrée), à la place de l'entité."
+        }
+      }
+    },
+    "snooze": {
+      "name": "Snooze",
+      "description": "Masque des tâches un moment ; elles reviennent si leur fenêtre est toujours ouverte.",
+      "fields": {
+        "entity_id": {
+          "name": "Tâche",
+          "description": "Capteur(s) d'état de la ou des tâches."
+        },
+        "task_id": {
+          "name": "Identifiant de tâche",
+          "description": "Identifiant de la tâche (sous-entrée), à la place de l'entité."
+        },
+        "minutes": {
+          "name": "Durée",
+          "description": "Durée du snooze ; par défaut celle de la tâche."
+        }
+      }
+    }
+  }
+}

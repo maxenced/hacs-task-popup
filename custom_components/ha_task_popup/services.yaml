@@ -1,0 +1,29 @@
+ack:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: ha_task_popup
+          domain: sensor
+          multiple: true
+    task_id:
+      selector:
+        text:
+snooze:
+  fields:
+    entity_id:
+      selector:
+        entity:
+          integration: ha_task_popup
+          domain: sensor
+          multiple: true
+    task_id:
+      selector:
+        text:
+    minutes:
+      selector:
+        number:
+          min: 1
+          max: 1440
+          unit_of_measurement: min
+          mode: box

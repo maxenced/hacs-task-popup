@@ -1,0 +1,198 @@
+{
+  "config": {
+    "abort": {
+      "single_instance_allowed": "Already configured. Add tasks from the integration page."
+    },
+    "step": {
+      "user": {
+        "title": "Task popup",
+        "description": "General settings. Tasks are added afterwards, one by one, from the integration page.",
+        "data": {
+          "fully_devices": "Fully Kiosk tablets",
+          "display_on": "Show the popup on",
+          "manage_screen": "Turn the tablet screen on and keep it on"
+        },
+        "data_description": {
+          "fully_devices": "Tablets (fully_kiosk integration) where the popup is shown and whose screen is managed.",
+          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed."
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Task popup",
+        "data": {
+          "fully_devices": "Fully Kiosk tablets",
+          "display_on": "Show the popup on",
+          "manage_screen": "Turn the tablet screen on and keep it on"
+        },
+        "data_description": {
+          "fully_devices": "Tablets (fully_kiosk integration) where the popup is shown and whose screen is managed.",
+          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed."
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "task": {
+      "initiate_flow": {
+        "user": "Add a task"
+      },
+      "entry_type": "Task",
+      "abort": {
+        "reconfigure_successful": "Task updated"
+      },
+      "error": {
+        "no_days": "Select at least one day"
+      },
+      "step": {
+        "user": {
+          "title": "New task",
+          "data": {
+            "name": "Name",
+            "message": "Message",
+            "icon": "Icon",
+            "color": "Background colour",
+            "display_mode": "Display mode",
+            "snooze_minutes": "Snooze duration",
+            "trigger": "Trigger"
+          }
+        },
+        "reconfigure": {
+          "title": "Edit task",
+          "data": {
+            "name": "Name",
+            "message": "Message",
+            "icon": "Icon",
+            "color": "Background colour",
+            "display_mode": "Display mode",
+            "snooze_minutes": "Snooze duration",
+            "trigger": "Trigger"
+          }
+        },
+        "simple": {
+          "title": "Days and time",
+          "description": "The task appears at the start time on the selected days and stays until it is marked done (or until the optional end time).",
+          "data": {
+            "days": "Days",
+            "start_time": "Start time",
+            "end_time": "End time (optional)"
+          }
+        },
+        "calendar": {
+          "title": "Calendar",
+          "description": "The task is active during the calendar events.",
+          "data": {
+            "calendar_entity": "Calendar",
+            "title_filter": "Title contains (optional)"
+          }
+        },
+        "detection": {
+          "title": "Detection",
+          "description": "The task appears when the entity switches to the chosen state and disappears after the duration, even without acknowledgement.",
+          "data": {
+            "entity": "Entity",
+            "target_state": "State",
+            "duration_minutes": "Display duration"
+          }
+        }
+      }
+    }
+  },
+  "selector": {
+    "display_on": {
+      "options": {
+        "fully": "The selected Fully Kiosk tablets only",
+        "all": "All browsers"
+      }
+    },
+    "display_mode": {
+      "options": {
+        "fullscreen": "Full screen"
+      }
+    },
+    "trigger": {
+      "options": {
+        "simple": "Simple (days + time)",
+        "calendar": "Schedule (calendar)",
+        "detection": "Detection (entity state)"
+      }
+    },
+    "days": {
+      "options": {
+        "mon": "Monday",
+        "tue": "Tuesday",
+        "wed": "Wednesday",
+        "thu": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "sun": "Sunday"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "state": {
+        "name": "State",
+        "state": {
+          "inactive": "Inactive",
+          "active": "Active",
+          "snoozed": "Snoozed",
+          "done": "Done"
+        }
+      }
+    },
+    "button": {
+      "ack": {
+        "name": "Done"
+      },
+      "snooze": {
+        "name": "Snooze"
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_task": {
+      "message": "Unknown task: {task}"
+    },
+    "not_loaded": {
+      "message": "The HA Task Popup integration is not configured"
+    }
+  },
+  "services": {
+    "ack": {
+      "name": "Mark as done",
+      "description": "Marks tasks as done until their next occurrence.",
+      "fields": {
+        "entity_id": {
+          "name": "Task",
+          "description": "State sensor(s) of the task(s)."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Task identifier (sub-entry), as an alternative to the entity."
+        }
+      }
+    },
+    "snooze": {
+      "name": "Snooze",
+      "description": "Hides tasks for a while; they come back if their window is still open.",
+      "fields": {
+        "entity_id": {
+          "name": "Task",
+          "description": "State sensor(s) of the task(s)."
+        },
+        "task_id": {
+          "name": "Task ID",
+          "description": "Task identifier (sub-entry), as an alternative to the entity."
+        },
+        "minutes": {
+          "name": "Duration",
+          "description": "Snooze duration; defaults to the task's duration."
+        }
+      }
+    }
+  }
+}

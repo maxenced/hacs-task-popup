@@ -1,0 +1,15 @@
+{
+  "domain": "ha_task_popup",
+  "name": "HA Task Popup",
+  "after_dependencies": ["calendar", "fully_kiosk"],
+  "codeowners": ["@maxenced"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http", "websocket_api"],
+  "documentation": "https://github.com/maxenced/ha_task_popup",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/maxenced/ha_task_popup/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
