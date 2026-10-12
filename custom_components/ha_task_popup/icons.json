@@ -1,0 +1,23 @@
+{
+  "entity": {
+    "sensor": {
+      "state": {
+        "default": "mdi:clipboard-text-clock-outline",
+        "state": {
+          "inactive": "mdi:clipboard-outline",
+          "active": "mdi:clipboard-alert-outline",
+          "snoozed": "mdi:alarm-snooze",
+          "done": "mdi:clipboard-check-outline"
+        }
+      }
+    },
+    "button": {
+      "ack": { "default": "mdi:check-bold" },
+      "snooze": { "default": "mdi:alarm-snooze" }
+    }
+  },
+  "services": {
+    "ack": { "service": "mdi:check-bold" },
+    "snooze": { "service": "mdi:alarm-snooze" }
+  }
+}

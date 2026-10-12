@@ -26,8 +26,6 @@ async def async_setup_entry(
 class AckButton(TaskEntity, ButtonEntity):
     """Marque la tâche comme faite."""
 
-    _attr_icon = "mdi:check-bold"
-
     def __init__(self, manager: TaskPopupManager, task: TaskDef) -> None:
         """Initialise."""
         super().__init__(manager, task, "ack")
@@ -38,8 +36,6 @@ class AckButton(TaskEntity, ButtonEntity):
 
 class SnoozeButton(TaskEntity, ButtonEntity):
     """Reporte la tâche de sa durée de snooze."""
-
-    _attr_icon = "mdi:alarm-snooze"
 
     def __init__(self, manager: TaskPopupManager, task: TaskDef) -> None:
         """Initialise."""
