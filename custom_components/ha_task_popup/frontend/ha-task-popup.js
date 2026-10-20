@@ -3,8 +3,8 @@
  *
  * S'abonne à `ha_task_popup/subscribe` et affiche la première tâche active en
  * plein écran, dans le style des pop-ups Bubble Card du dashboard (voile flouté,
- * panneau « verre », boutons pilule). Les tâches suivantes s'affichent une fois
- * la précédente faite ou snoozée.
+ * panneau « verre », boutons pilule), avec un seul bloc central (icône + message).
+ * Les tâches suivantes s'affichent une fois la précédente faite ou snoozée.
  *
  * Par défaut, le popup ne s'affiche que dans Fully Kiosk sur les tablettes
  * choisies (comparaison de `fully.getDeviceId()` avec l'appareil HA).
@@ -57,11 +57,6 @@ const STYLE = `
     animation: rise 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1);
     overflow: hidden;
   }
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
   .glass {
     background-color: rgba(16, 22, 36, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -69,38 +64,10 @@ const STYLE = `
     -webkit-backdrop-filter: blur(9px);
     color: #fff;
   }
-  .title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 50px;
-    padding: 0 20px 0 6px;
-    border-radius: 25px;
-    min-width: 0;
-  }
-  .title .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--task-color) 70%, white 10%);
-    flex: none;
-  }
-  .title .icon ha-icon {
-    --mdc-icon-size: 22px;
-    color: #fff;
-  }
-  .title .name {
-    font-size: 16px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
   .counter {
-    margin-left: auto;
+    position: absolute;
+    top: 18px;
+    right: 18px;
     height: 50px;
     min-width: 50px;
     padding: 0 16px;
@@ -236,13 +203,7 @@ class TaskPopupOverlay extends HTMLElement {
       <div class="backdrop"></div>
       <div class="popup" role="alertdialog" aria-modal="true" aria-label="${escapeHtml(task.name)}"
            style="${sameTask ? "animation: none" : ""}">
-        <div class="header">
-          <div class="title glass">
-            <span class="icon"><ha-icon icon="${escapeHtml(task.icon)}"></ha-icon></span>
-            <span class="name">${escapeHtml(task.name)}</span>
-          </div>
-          ${total > 1 ? `<div class="counter glass">${index + 1} / ${total}</div>` : ""}
-        </div>
+        ${total > 1 ? `<div class="counter glass">${index + 1} / ${total}</div>` : ""}
         <div class="body">
           <ha-icon class="big-icon" icon="${escapeHtml(task.icon)}"></ha-icon>
           <div class="message">${escapeHtml(task.message || task.name)}</div>

@@ -6,7 +6,8 @@ Intégration Home Assistant qui affiche **en plein écran sur la tablette** les 
 - Popup global : aucune carte à ajouter au dashboard. L'intégration charge elle-même un module JS
   sur toutes les pages de HA.
 - Rendu dans le style des pop-ups Bubble Card du dashboard : voile sombre flouté, panneau « verre »
-  arrondi, boutons en pilule. Le fond prend la couleur choisie pour la tâche.
+  arrondi, boutons en pilule. Le fond prend la couleur choisie pour la tâche, et le centre n'affiche
+  qu'un seul bloc : l'icône et le message (le nom de la tâche si le message est vide).
 - Écran de la tablette piloté par l'intégration officielle **Fully Kiosk Browser** : il s'allume
   quand une tâche apparaît et reste allumé tant qu'elle est affichée.
 
@@ -36,6 +37,7 @@ Il faut Home Assistant 2025.3 ou plus récent (sous-entrées de configuration).
 | Tablettes Fully Kiosk | Appareils de l'intégration `fully_kiosk` où le popup s'affiche et dont l'écran est piloté. |
 | Afficher le popup sur | *Les tablettes Fully Kiosk choisies uniquement* (défaut) ou *Tous les navigateurs*. |
 | Allumer l'écran de la tablette et le garder allumé | Allume l'écran à l'apparition d'une tâche et met le délai de mise en veille Fully à 0 pendant l'affichage. Le délai d'origine est remis quand plus aucune tâche n'est affichée, et l'écran s'éteint ensuite tout seul. |
+| Forcer la luminosité de la tablette au maximum | Désactivé par défaut. Met la luminosité Fully à 255 tant qu'une tâche est affichée, puis remet la luminosité d'origine (ou la luminosité système si Fully n'en avait pas de fixée) quand plus aucune tâche n'est affichée. |
 
 Ces réglages se modifient ensuite par **Configurer**.
 

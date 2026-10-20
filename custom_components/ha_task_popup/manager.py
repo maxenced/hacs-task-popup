@@ -30,6 +30,7 @@ from .const import (
     CONF_FULLY_DEVICES,
     CONF_ICON,
     CONF_MANAGE_SCREEN,
+    CONF_MAX_BRIGHTNESS,
     CONF_MESSAGE,
     CONF_NAME,
     CONF_SNOOZE_MINUTES,
@@ -143,7 +144,12 @@ class TaskPopupManager:
         self._store: Store[dict[str, Any]] = Store(hass, STORAGE_VERSION, f"{DOMAIN}.{entry.entry_id}")
         self._unsubs: list[CALLBACK_TYPE] = []
         self._visible: list[str] = []
-        self.screen = ScreenManager(hass, self.options.get(CONF_FULLY_DEVICES, []), {})
+        self.screen = ScreenManager(
+            hass,
+            self.options.get(CONF_FULLY_DEVICES, []),
+            wake=self.options.get(CONF_MANAGE_SCREEN, True),
+            max_brightness=self.options.get(CONF_MAX_BRIGHTNESS, False),
+        )
 
     # ------------------------------------------------------------------ cycle
 
@@ -159,6 +165,7 @@ class TaskPopupManager:
                 "triggered_at": saved.get("triggered_at"),
             }
         self.screen.saved.update(stored.get("screen", {}))
+        self.screen.saved_brightness.update(stored.get("brightness", {}))
 
         detection_entities = {
             task.data[CONF_ENTITY]
@@ -261,7 +268,7 @@ class TaskPopupManager:
 
     @callback
     def _update_screen(self) -> None:
-        if not self.options.get(CONF_MANAGE_SCREEN, True) or not self.screen.device_ids:
+        if not self.screen.enabled:
             return
         visible = self.visible_tasks()
         previous, self._visible = self._visible, visible
@@ -384,4 +391,5 @@ class TaskPopupManager:
                 for task_id in self.runtimes
             },
             "screen": dict(self.screen.saved),
+            "brightness": dict(self.screen.saved_brightness),
         }

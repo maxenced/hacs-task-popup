@@ -28,6 +28,7 @@ from .const import (
     CONF_FULLY_DEVICES,
     CONF_ICON,
     CONF_MANAGE_SCREEN,
+    CONF_MAX_BRIGHTNESS,
     CONF_MESSAGE,
     CONF_NAME,
     CONF_SNOOZE_MINUTES,
@@ -89,6 +90,7 @@ def _settings_schema(values: dict[str, Any]) -> vol.Schema:
                 DISPLAY_ON_OPTIONS, CONF_DISPLAY_ON
             ),
             vol.Required(CONF_MANAGE_SCREEN, default=values.get(CONF_MANAGE_SCREEN, True)): bool,
+            vol.Required(CONF_MAX_BRIGHTNESS, default=values.get(CONF_MAX_BRIGHTNESS, False)): bool,
         }
     )
 

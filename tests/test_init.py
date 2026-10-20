@@ -26,6 +26,7 @@ from custom_components.ha_task_popup.const import (
     CONF_ENTITY,
     CONF_FULLY_DEVICES,
     CONF_MANAGE_SCREEN,
+    CONF_MAX_BRIGHTNESS,
     CONF_MESSAGE,
     CONF_NAME,
     CONF_SNOOZE_MINUTES,
@@ -217,6 +218,49 @@ async def test_screen_management(hass: HomeAssistant) -> None:
     await hass.async_block_till_done()
     assert set_value[-1].data["value"] == 30
     assert not entry.runtime_data.screen.holding
+
+
+@pytest.mark.parametrize(("before", "restored"), [("120", 120), ("unknown", None)])
+async def test_max_brightness(hass: HomeAssistant, before: str, restored: float | None) -> None:
+    """La luminosité est mise au maximum puis restaurée (réglage système si inconnue)."""
+    fully_entry = MockConfigEntry(domain="fully_kiosk")
+    fully_entry.add_to_hass(hass)
+    device = dr.async_get(hass).async_get_or_create(
+        config_entry_id=fully_entry.entry_id, identifiers={("fully_kiosk", "abc-123")}
+    )
+    brightness = er.async_get(hass).async_get_or_create(
+        "number", "fully_kiosk", "abc-123-screenBrightness", device_id=device.id, config_entry=fully_entry
+    )
+    hass.states.async_set(brightness.entity_id, before)
+    set_value = async_mock_service(hass, "number", "set_value")
+    set_config = async_mock_service(hass, "fully_kiosk", "set_config")
+
+    hass.states.async_set("input_boolean.menage", "off")
+    entry = _entry(
+        options={
+            CONF_DISPLAY_ON: "fully",
+            CONF_MANAGE_SCREEN: False,
+            CONF_MAX_BRIGHTNESS: True,
+            CONF_FULLY_DEVICES: [device.id],
+        },
+        tasks=(("detect", DETECTION),),
+    )
+    await _setup(hass, entry)
+
+    hass.states.async_set("input_boolean.menage", "on")
+    await hass.async_block_till_done()
+    assert [call.data for call in set_value] == [{"entity_id": brightness.entity_id, "value": 255}]
+    assert entry.runtime_data.screen.holding
+
+    await hass.services.async_call(DOMAIN, "snooze", {"task_id": "detect"}, blocking=True)
+    await hass.async_block_till_done()
+    assert not entry.runtime_data.screen.holding
+    if restored is None:
+        assert len(set_value) == 1
+        assert set_config[-1].data == {"device_id": [device.id], "key": "screenBrightness", "value": ""}
+    else:
+        assert set_value[-1].data["value"] == restored
+        assert not set_config
 
 
 async def test_unload(hass: HomeAssistant) -> None:

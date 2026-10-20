@@ -10,11 +10,13 @@
         "data": {
           "fully_devices": "Tablettes Fully Kiosk",
           "display_on": "Afficher le popup sur",
-          "manage_screen": "Allumer l'écran de la tablette et le garder allumé"
+          "manage_screen": "Allumer l'écran de la tablette et le garder allumé",
+          "max_brightness": "Forcer la luminosité de la tablette au maximum"
         },
         "data_description": {
           "fully_devices": "Tablettes (intégration fully_kiosk) où le popup s'affiche et dont l'écran est piloté.",
-          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée."
+          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée.",
+          "max_brightness": "Met la luminosité de l'écran au maximum tant qu'une tâche est affichée, puis remet la luminosité d'origine."
         }
       }
     }
@@ -26,11 +28,13 @@
         "data": {
           "fully_devices": "Tablettes Fully Kiosk",
           "display_on": "Afficher le popup sur",
-          "manage_screen": "Allumer l'écran de la tablette et le garder allumé"
+          "manage_screen": "Allumer l'écran de la tablette et le garder allumé",
+          "max_brightness": "Forcer la luminosité de la tablette au maximum"
         },
         "data_description": {
           "fully_devices": "Tablettes (intégration fully_kiosk) où le popup s'affiche et dont l'écran est piloté.",
-          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée."
+          "manage_screen": "Allume l'écran quand une tâche apparaît et désactive la mise en veille tant qu'elle est affichée.",
+          "max_brightness": "Met la luminosité de l'écran au maximum tant qu'une tâche est affichée, puis remet la luminosité d'origine."
         }
       }
     }

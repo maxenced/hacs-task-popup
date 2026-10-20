@@ -12,6 +12,7 @@ SUBENTRY_TYPE_TASK: Final = "task"
 CONF_FULLY_DEVICES: Final = "fully_devices"
 CONF_DISPLAY_ON: Final = "display_on"
 CONF_MANAGE_SCREEN: Final = "manage_screen"
+CONF_MAX_BRIGHTNESS: Final = "max_brightness"
 
 DISPLAY_ON_FULLY: Final = "fully"
 DISPLAY_ON_ALL: Final = "all"

@@ -10,11 +10,13 @@
         "data": {
           "fully_devices": "Fully Kiosk tablets",
           "display_on": "Show the popup on",
-          "manage_screen": "Turn the tablet screen on and keep it on"
+          "manage_screen": "Turn the tablet screen on and keep it on",
+          "max_brightness": "Force the tablet brightness to maximum"
         },
         "data_description": {
           "fully_devices": "Tablets (fully_kiosk integration) where the popup is shown and whose screen is managed.",
-          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed."
+          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed.",
+          "max_brightness": "Sets the screen brightness to maximum while a task is displayed, then restores the previous brightness."
         }
       }
     }
@@ -26,11 +28,13 @@
         "data": {
           "fully_devices": "Fully Kiosk tablets",
           "display_on": "Show the popup on",
-          "manage_screen": "Turn the tablet screen on and keep it on"
+          "manage_screen": "Turn the tablet screen on and keep it on",
+          "max_brightness": "Force the tablet brightness to maximum"
         },
         "data_description": {
           "fully_devices": "Tablets (fully_kiosk integration) where the popup is shown and whose screen is managed.",
-          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed."
+          "manage_screen": "Turns the screen on when a task appears and disables the screen-off timer while it is displayed.",
+          "max_brightness": "Sets the screen brightness to maximum while a task is displayed, then restores the previous brightness."
         }
       }
     }
