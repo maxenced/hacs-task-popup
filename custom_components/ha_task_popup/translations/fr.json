@@ -82,7 +82,13 @@
           "data": {
             "days": "Jours",
             "start_time": "Heure de départ",
-            "end_time": "Heure de fin (optionnelle)"
+            "end_time": "Heure de fin (optionnelle)",
+            "every_weeks": "Toutes les combien de semaines",
+            "reference_date": "Date de référence"
+          },
+          "data_description": {
+            "every_weeks": "1 = chaque semaine, 2 = une semaine sur deux, etc.",
+            "reference_date": "La semaine (lundi au dimanche) qui contient cette date est active, puis une toutes les N semaines à partir d'elle. Ignorée si la répétition est hebdomadaire."
           }
         },
         "calendar": {

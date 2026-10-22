@@ -15,6 +15,7 @@ from homeassistant.config_entries import (
 )
 from homeassistant.core import callback
 from homeassistant.helpers import selector
+from homeassistant.util import dt as dt_util
 
 from .const import (
     CONF_CALENDAR,
@@ -25,12 +26,14 @@ from .const import (
     CONF_DURATION_MINUTES,
     CONF_END_TIME,
     CONF_ENTITY,
+    CONF_EVERY_WEEKS,
     CONF_FULLY_DEVICES,
     CONF_ICON,
     CONF_MANAGE_SCREEN,
     CONF_MAX_BRIGHTNESS,
     CONF_MESSAGE,
     CONF_NAME,
+    CONF_REFERENCE_DATE,
     CONF_SNOOZE_MINUTES,
     CONF_START_TIME,
     CONF_TARGET_STATE,
@@ -38,6 +41,7 @@ from .const import (
     CONF_TRIGGER,
     DEFAULT_COLOR,
     DEFAULT_DURATION_MINUTES,
+    DEFAULT_EVERY_WEEKS,
     DEFAULT_ICON,
     DEFAULT_SNOOZE_MINUTES,
     DEFAULT_TARGET_STATE,
@@ -55,7 +59,7 @@ from .const import (
 )
 
 TRIGGER_FIELDS = {
-    TRIGGER_SIMPLE: (CONF_DAYS, CONF_START_TIME, CONF_END_TIME),
+    TRIGGER_SIMPLE: (CONF_DAYS, CONF_START_TIME, CONF_END_TIME, CONF_EVERY_WEEKS, CONF_REFERENCE_DATE),
     TRIGGER_CALENDAR: (CONF_CALENDAR, CONF_TITLE_FILTER),
     TRIGGER_DETECTION: (CONF_ENTITY, CONF_TARGET_STATE, CONF_DURATION_MINUTES),
 }
@@ -190,6 +194,7 @@ class TaskSubentryFlow(ConfigSubentryFlow):
                 errors[CONF_DAYS] = "no_days"
             else:
                 self._data.pop(CONF_END_TIME, None)
+                user_input[CONF_EVERY_WEEKS] = int(user_input.get(CONF_EVERY_WEEKS, DEFAULT_EVERY_WEEKS))
                 return self._async_finish(user_input)
         values = {**self._data, **(user_input or {})}
         end_key = vol.Optional(CONF_END_TIME, description={"suggested_value": values.get(CONF_END_TIME)})
@@ -198,6 +203,14 @@ class TaskSubentryFlow(ConfigSubentryFlow):
                 vol.Required(CONF_DAYS, default=values.get(CONF_DAYS, [])): _select(WEEKDAYS, CONF_DAYS, multiple=True),
                 vol.Required(CONF_START_TIME, default=values.get(CONF_START_TIME, "20:00:00")): selector.TimeSelector(),
                 end_key: selector.TimeSelector(),
+                vol.Required(
+                    CONF_EVERY_WEEKS, default=values.get(CONF_EVERY_WEEKS, DEFAULT_EVERY_WEEKS)
+                ): selector.NumberSelector(
+                    selector.NumberSelectorConfig(min=1, max=52, step=1, mode=selector.NumberSelectorMode.BOX)
+                ),
+                vol.Required(
+                    CONF_REFERENCE_DATE, default=values.get(CONF_REFERENCE_DATE, dt_util.now().date().isoformat())
+                ): selector.DateSelector(),
             }
         )
         return self.async_show_form(step_id="simple", data_schema=schema, errors=errors)

@@ -50,7 +50,7 @@ Champs communs : nom, message (plusieurs lignes possibles), icône, couleur de f
 
 | Déclencheur | Quand la tâche est active |
 |---|---|
-| **Simple** | Les jours choisis, à partir de l'heure de départ. Elle reste affichée jusqu'à **Fait**, ou jusqu'à l'heure de fin si vous en mettez une. Une nouvelle occurrence remplace la précédente. |
+| **Simple** | Les jours choisis, à partir de l'heure de départ. Elle reste affichée jusqu'à **Fait**, ou jusqu'à l'heure de fin si vous en mettez une. Une nouvelle occurrence remplace la précédente. Avec **Toutes les N semaines** > 1, seule une semaine sur N est active : celle (du lundi au dimanche) qui contient la **date de référence**, puis toutes les N semaines avant et après. |
 | **Planning** | Pendant les événements d'une entité `calendar`, avec un filtre optionnel « le titre contient » (sans tenir compte des majuscules). |
 | **Détection** | Quand une entité (binary_sensor, input_boolean, n'importe quel état) **passe** à l'état choisi (`on` par défaut). La tâche reste active pendant la durée choisie, puis disparaît même sans acquittement. Un passage depuis `unavailable` ou `unknown` est ignoré. |
 

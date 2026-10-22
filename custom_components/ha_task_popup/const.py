@@ -30,6 +30,8 @@ CONF_TRIGGER: Final = "trigger"
 CONF_DAYS: Final = "days"
 CONF_START_TIME: Final = "start_time"
 CONF_END_TIME: Final = "end_time"
+CONF_EVERY_WEEKS: Final = "every_weeks"
+CONF_REFERENCE_DATE: Final = "reference_date"
 
 CONF_CALENDAR: Final = "calendar_entity"
 CONF_TITLE_FILTER: Final = "title_filter"
@@ -51,6 +53,7 @@ WEEKDAYS: Final = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 DEFAULT_ICON: Final = "mdi:clipboard-check-outline"
 DEFAULT_COLOR: Final = [21, 101, 192]
 DEFAULT_SNOOZE_MINUTES: Final = 15
+DEFAULT_EVERY_WEEKS: Final = 1
 DEFAULT_DURATION_MINUTES: Final = 30
 DEFAULT_TARGET_STATE: Final = "on"
 

@@ -49,25 +49,49 @@ def parse_time(value: str | None) -> time | None:
     return time.fromisoformat(value)
 
 
+def parse_date(value: str | None) -> date | None:
+    """Convertit « AAAA-MM-JJ » en ``date``."""
+    if not value:
+        return None
+    return date.fromisoformat(value)
+
+
+def _week_matches(day: date, every_weeks: int, reference: date | None) -> bool:
+    """Vrai si la semaine (lundi-dimanche) de ``day`` est une semaine active.
+
+    Les semaines actives sont celle de ``reference`` puis une sur ``every_weeks``,
+    dans les deux sens.
+    """
+    if every_weeks <= 1 or reference is None:
+        return True
+    week = (day - timedelta(days=day.weekday()) - (reference - timedelta(days=reference.weekday()))).days // 7
+    return week % every_weeks == 0
+
+
 def simple_window(
     now: datetime,
     days: list[str],
     start: time,
     end: time | None,
     since: datetime | None = None,
+    every_weeks: int = 1,
+    reference: date | None = None,
 ) -> Window | None:
     """Fenêtre du déclencheur « simple » (jours + heure de départ).
 
     La dernière occurrence démarrée (et postérieure à ``since``, date de
     création de la tâche) ouvre la fenêtre. Sans heure de fin, elle reste
     ouverte jusqu'à l'acquittement ; une nouvelle occurrence la remplace.
+    Avec ``every_weeks`` > 1, seules les semaines alignées sur celle de
+    ``reference`` comptent.
     """
     weekdays = {WEEKDAYS.index(day) for day in days if day in WEEKDAYS}
     if not weekdays:
         return None
-    for back in range(8):
+    every_weeks = max(1, every_weeks)
+    for back in range(7 * every_weeks + 1):
         day: date = now.date() - timedelta(days=back)
-        if day.weekday() not in weekdays:
+        if day.weekday() not in weekdays or not _week_matches(day, every_weeks, reference):
             continue
         occ_start = datetime.combine(day, start, tzinfo=now.tzinfo)
         if occ_start > now:

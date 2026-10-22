@@ -13,11 +13,13 @@ from custom_components.ha_task_popup.const import (
     CONF_DURATION_MINUTES,
     CONF_END_TIME,
     CONF_ENTITY,
+    CONF_EVERY_WEEKS,
     CONF_FULLY_DEVICES,
     CONF_ICON,
     CONF_MANAGE_SCREEN,
     CONF_MESSAGE,
     CONF_NAME,
+    CONF_REFERENCE_DATE,
     CONF_SNOOZE_MINUTES,
     CONF_START_TIME,
     CONF_TARGET_STATE,
@@ -89,6 +91,8 @@ async def test_add_simple_task_then_reconfigure_to_detection(hass: HomeAssistant
     subentry = next(iter(entry.subentries.values()))
     assert subentry.title == "Poubelles"
     assert subentry.data[CONF_DAYS] == ["mon", "thu"]
+    assert subentry.data[CONF_EVERY_WEEKS] == 1
+    assert subentry.data[CONF_REFERENCE_DATE]
     assert subentry.subentry_id in entry.runtime_data.tasks
 
     result = await hass.config_entries.subentries.async_init(
@@ -112,7 +116,26 @@ async def test_add_simple_task_then_reconfigure_to_detection(hass: HomeAssistant
     assert subentry.title == "Chaises"
     # Les champs de l'ancien déclencheur ont disparu
     assert CONF_DAYS not in subentry.data
+    assert CONF_EVERY_WEEKS not in subentry.data
     assert subentry.data[CONF_ENTITY] == "input_boolean.menage"
+
+
+async def test_add_task_every_two_weeks(hass: HomeAssistant) -> None:
+    entry = await _create_entry(hass)
+    result = await hass.config_entries.subentries.async_init(
+        (entry.entry_id, SUBENTRY_TYPE_TASK), context={"source": config_entries.SOURCE_USER}
+    )
+    result = await hass.config_entries.subentries.async_configure(result["flow_id"], {**COMMON, CONF_TRIGGER: "simple"})
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {CONF_DAYS: ["tue"], CONF_START_TIME: "19:00:00", CONF_EVERY_WEEKS: 2.0, CONF_REFERENCE_DATE: "2026-10-13"},
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+
+    subentry = next(iter(entry.subentries.values()))
+    assert subentry.data[CONF_EVERY_WEEKS] == 2
+    assert subentry.data[CONF_REFERENCE_DATE] == "2026-10-13"
 
 
 async def test_add_calendar_task(hass: HomeAssistant) -> None:

@@ -59,6 +59,28 @@ class TestSimpleWindow:
     def test_no_days(self):
         assert simple_window(at(0, 21), [], time(20), None) is None
 
+    def test_every_two_weeks_follows_reference_week(self):
+        # Semaine de référence : celle du mercredi 14 octobre (lundi 12).
+        ref = (MON + timedelta(days=2)).date()
+        assert simple_window(at(0, 21), ["mon"], time(20), time(22), every_weeks=2, reference=ref) is not None
+        assert simple_window(at(7, 21), ["mon"], time(20), time(22), every_weeks=2, reference=ref) is None
+        assert simple_window(at(14, 21), ["mon"], time(20), time(22), every_weeks=2, reference=ref) is not None
+        # Aussi avant la date de référence.
+        assert simple_window(at(-14, 21), ["mon"], time(20), time(22), every_weeks=2, reference=ref) is not None
+        assert simple_window(at(-7, 21), ["mon"], time(20), time(22), every_weeks=2, reference=ref) is None
+
+    def test_every_three_weeks_keeps_last_occurrence_open(self):
+        ref = MON.date()
+        # Sans heure de fin, l'occurrence du lundi reste ouverte pendant les semaines inactives.
+        win = simple_window(at(16, 9), ["mon"], time(20), None, every_weeks=3, reference=ref)
+        assert win is not None
+        assert win.start == at(0, 20)
+        win = simple_window(at(21, 21), ["mon"], time(20), None, every_weeks=3, reference=ref)
+        assert win.start == at(21, 20)
+
+    def test_every_weeks_ignored_without_reference(self):
+        assert simple_window(at(7, 21), ["mon"], time(20), time(22), every_weeks=2) is not None
+
 
 class TestCalendarWindow:
     def test_filter_and_ongoing(self):

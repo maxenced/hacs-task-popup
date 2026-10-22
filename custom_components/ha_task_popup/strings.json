@@ -82,7 +82,13 @@
           "data": {
             "days": "Days",
             "start_time": "Start time",
-            "end_time": "End time (optional)"
+            "end_time": "End time (optional)",
+            "every_weeks": "Every how many weeks",
+            "reference_date": "Reference date"
+          },
+          "data_description": {
+            "every_weeks": "1 = every week, 2 = every other week, etc.",
+            "reference_date": "The week (Monday to Sunday) containing this date is active, then every N weeks from it. Ignored when repeating every week."
           }
         },
         "calendar": {
